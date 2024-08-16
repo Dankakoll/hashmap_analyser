@@ -14,6 +14,5 @@ public class URLClassAfter extends URLClass{
     public URLClassAfter(String URL, String Html){
         this.setURL(URL);
         this.setHtml(Html);
-        this.setHash(URL.hashCode());
     }
 }

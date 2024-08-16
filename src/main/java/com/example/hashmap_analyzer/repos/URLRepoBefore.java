@@ -12,9 +12,8 @@ import java.util.List;
 
 @Repository
 public interface URLRepoBefore extends JpaRepository <URLClassbefore,Long> {
+// Обновление данных
 @Modifying
 @Query(value = "update hash_before set html_code = :html_code where hash = :hash",nativeQuery = true)
 public void update(Integer hash, String html_code);
-@Query (value = "select u1.Hash from URLClassbefore u1, URLClassAfter u2 where not u1.Hash = u2.Hash")
-List<Integer> returnIds();
 }

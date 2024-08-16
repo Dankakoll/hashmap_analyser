@@ -9,7 +9,7 @@ public class URLClassbefore extends URLClass {
     public URLClassbefore(String URL, String Html){
         this.setURL(URL);
         this.setHtml(Html);
-        this.setHash(URL.hashCode());
+
     }
 
     public URLClassbefore() {

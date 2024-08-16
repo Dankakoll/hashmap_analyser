@@ -28,9 +28,11 @@ public class Controller {
         this.repo_before=repo_before;
         this.repo_after=repo_after;
     }
+    //Вывод сообщения
     @GetMapping("/message")
     ResponseEntity<String> message()
     {
+        //Выводит различия между таблицами
         List<List<String>> answer = compareTables();
         List<String> responses =new ArrayList<>();
         responses.add("Здравствуйте, дорогая и.о. секретаря."+"<br>"+"За последние сутки во вверенных Вам сайтах произошли следующие изменения:"+"<br>");
@@ -85,24 +87,19 @@ public class Controller {
     @PutMapping(value="/change", consumes = "application/json")
     ResponseEntity<?> change_html (@RequestBody URLClassAfter after)
     {
-        Long id =after.getHash().longValue();
-        Optional<URLClassAfter> stc_after = repo_after.findById(id);
-
-        if (stc_after.isPresent())
-        {
-            URLClassAfter change = stc_after.get();
-            URLClassAfter updated = repo_after.findById(id).map((found)->
+            URLClassAfter updated = repo_after.findById(after.getHash().longValue()).map((found)->
                     {
-                        found.setHtml(change.getHtml());
-                        found.setURL(change.getURL());
+                        found.setHtml(after.getHtml());
+                        found.setURL(after.getURL());
                         return repo_after.save(found);
                     }
-                    ).orElseGet(()-> repo_after.save(after));
+                    ).orElseGet(()-> {
+                        after.setURL(after.getURL());
+                        return repo_after.save(after);
+                                });
             return new ResponseEntity<>("Changed HTML of URL " + updated.getURL(), HttpStatus.OK);
-        }
-        else
-        return new ResponseEntity<>("Nothing changed. Wrong URL",HttpStatus.BAD_REQUEST);
     }
+    //Копирование таблицы текущего дня в предыдущий
     @GetMapping("/copy")
     @Transactional
     ResponseEntity<?> copy_to_tablebefore ()

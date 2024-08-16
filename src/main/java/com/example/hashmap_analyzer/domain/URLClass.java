@@ -8,11 +8,11 @@ import jakarta.persistence.criteria.CriteriaBuilder;
 
 public class URLClass {
     @Id
-    private Integer Hash;
+    private Integer Hash; //Хэш урла
     @Column(name="url", unique = true)
-    private String URL;
+    private String URL; // Сам урл
     @Column(name="html_code", nullable = false)
-    private String html;
+    private String html; // Код страницы
 
     public URLClass() {
 
