@@ -1,6 +1,6 @@
 version: '2.1'
 services:
-  db1:
+  Hash:
     image: postgres
     restart: always
     environment:
@@ -8,7 +8,11 @@ services:
       POSTGRES_USER: "user"
       POSTGRES_PASSWORD: "pass"
       PGDATA: "/var/lib/postgresql/data/pgdata"
+    expose:
+      - "5433"
     ports:
-      - 5432:5432
+      - "5433:5432"
     volumes:
-      - db1:/var/lib/postgresql/data
+      - Hash:/var/lib/postgresql/data
+volumes:
+  Hash:
